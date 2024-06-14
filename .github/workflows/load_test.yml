@@ -23,7 +23,7 @@ jobs:
           npm install -g k6-reporter
 
       - name: step 3 - run k6 load test
-        uses: grafana/k6-action@v0.49.0
+        uses: grafana/k6-action@HEAD
         with: 
           filename: ${{github.event.inputs.command}}
 
