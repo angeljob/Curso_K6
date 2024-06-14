@@ -5,7 +5,7 @@ on:
       command:
         description: 'Teste a ser executado'
         required: true
-        default: 'modulo5_conteudo_adicional/aula36_execução_aws_c_git.js -e URL=https://test-api.k6.io/public --out json=output.json'
+        default: 'K6_WEB_DASHBOARD=true K6_WEB_DASHBOARD_EXPORT=resultado_test.html k6 run modulo5_conteudo_adicional/aula36_execução_aws_c_git.js -e URL=https://test-api.k6.io/public'
 permissions:
   contents: write
 jobs:
@@ -17,9 +17,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: step 2 - run k6 load test
-        uses: grafana/k6-action@v0.2.0
-        with: 
-          filename: ${{github.event.inputs.command}}
+        run: ${{github.event.inputs.command}}
 
       - name: step 3 - list generated files
         run: ls -al
@@ -28,17 +26,20 @@ jobs:
         run: mkdir -p report
 
       - name: step 5 - move generated files
-        run: sudo mv output.json teste_k6.html report/
+        run: mv resultado_test.html report/
 
-      - name: step 6 - upload artifact
+      - name: step 6 - list files in report directory
+        run: ls -al report
+
+      - name: step 7 - upload artifact
         uses: actions/upload-artifact@v4
         with: 
-          name: relatorio de testes de performance
+          name: report test performance
           path: report
       
-      - name: step 7 - publish report
+      - name: step 8 - publish report
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: ./report
+          publish_dir: report

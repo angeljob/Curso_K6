@@ -48,11 +48,11 @@ import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporte
         }
     };
 
-    export function handleSummary(data) {
-        return {
-          "teste_k6.html": htmlReport(data),
-        };
-      }
+    // export function handleSummary(data) {
+    //     return {
+    //       "teste_k6.html": htmlReport(data),
+    //     };
+    //   }
     
 //comando executar: k6 run .\exe6_carga_perf_2_apis.js -e URL=https://test-api.k6.io/public
 
