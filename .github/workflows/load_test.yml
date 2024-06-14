@@ -5,7 +5,7 @@ on:
       command:
         description: 'Teste a ser executado'
         required: true
-        default: 'K6_WEB_DASHBOARD=true K6_WEB_DASHBOARD_EXPORT=resultado_test.html k6 run modulo5_conteudo_adicional/aula36_execução_aws_c_git.js -e URL=https://test-api.k6.io/public'
+        default: 'K6_WEB_DASHBOARD=true K6_WEB_DASHBOARD_EXPORT=index.html k6 run modulo5_conteudo_adicional/aula36_execução_aws_c_git.js -e URL=https://test-api.k6.io/public'
 permissions:
   contents: write
 jobs:
@@ -31,7 +31,7 @@ jobs:
         run: mkdir -p report
 
       - name: step 6 - move generated files
-        run: mv resultado_test.html report/
+        run: mv index.html report/
 
       - name: step 7 - list files in report directory
         run: ls -al report
