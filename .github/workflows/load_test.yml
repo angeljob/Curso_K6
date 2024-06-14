@@ -19,7 +19,7 @@ jobs:
       - name: step 2 - install k6
         run: |
           sudo apt update
-          sudo apt install -y k6
+          sudo snap install k6
 
       - name: step 3 - run k6 load test
         run: ${{github.event.inputs.command}}
