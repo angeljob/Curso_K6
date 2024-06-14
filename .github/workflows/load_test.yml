@@ -16,28 +16,33 @@ jobs:
       - name: step 1 - checkout
         uses: actions/checkout@v4
 
-      - name: step 2 - run k6 load test
+      - name: step 2 - install k6
+        run: |
+          sudo apt update
+          sudo apt install -y k6
+
+      - name: step 3 - run k6 load test
         run: ${{github.event.inputs.command}}
 
-      - name: step 3 - list generated files
+      - name: step 4 - list generated files
         run: ls -al
 
-      - name: step 4 - create report directory
+      - name: step 5 - create report directory
         run: mkdir -p report
 
-      - name: step 5 - move generated files
+      - name: step 6 - move generated files
         run: mv resultado_test.html report/
 
-      - name: step 6 - list files in report directory
+      - name: step 7 - list files in report directory
         run: ls -al report
 
-      - name: step 7 - upload artifact
+      - name: step 8 - upload artifact
         uses: actions/upload-artifact@v4
         with: 
           name: report test performance
           path: report
       
-      - name: step 8 - publish report
+      - name: step 9 - publish report
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
