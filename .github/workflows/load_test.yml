@@ -26,8 +26,8 @@ jobs:
           mkdir -p report
           sudo chmod -R 777 report
           docker run -v $PWD:/tests grafana/k6 run /tests/${{github.event.inputs.command}} --out json=/tests/report/k6_report.json
-          npm install -g xk6-dashboard
-          xk6-dashboard -o report/index.html report/k6_report.json
+          npm install -g k6-to-html
+          k6-to-html report/k6_report.json -o report/index.html
 
       - name: step 4 - upload artifact
         uses: actions/upload-artifact@v3
