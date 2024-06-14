@@ -26,8 +26,7 @@ jobs:
           mkdir -p report
           sudo chmod -R 777 report
           docker run -v $PWD:/tests grafana/k6 run /tests/${{github.event.inputs.command}} --out json=/tests/report/k6_report.json
-          npm install -g k6-to-html
-          k6-to-html report/k6_report.json -o report/index.html
+          docker run -v $PWD:/data -u $(id -u):$(id -g) loadimpact/k6-reporter:latest /data/report/k6_report.json
 
       - name: step 4 - upload artifact
         uses: actions/upload-artifact@v3
@@ -36,8 +35,4 @@ jobs:
           path: report
       
       - name: step 5 - publish report
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: report
+        uses: peaceiris/actions
