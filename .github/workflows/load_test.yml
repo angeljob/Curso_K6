@@ -1,18 +1,13 @@
 name: K6 load test
-# on: [push]
-# permissions:
-#   contents: write
 
 on:
-  #schedule:
-    # - cron: '0 11-20/3 * * 1-5'
-
   workflow_dispatch:
     inputs:
       command:
         description: 'Teste a ser executado'
         required: true
         default: 'modulo5_conteudo_adicional/aula36_execução_aws_c_git.js -e URL=https://test-api.k6.io/public'
+
 jobs:
   build: 
     name: K6 load test
@@ -26,15 +21,19 @@ jobs:
         with: 
           filename: ${{github.event.inputs.command}}
 
-      - run: ls & mkdir report & mv index.html report
-      
-      - name: step 3 - upload artifact
+      - name: step 3 - generate k6 report
+        run: |
+          mkdir -p report
+          docker run -v $PWD:/tests loadimpact/k6 run /tests/${{github.event.inputs.command}} --out json=report/k6_report.json
+          docker run -v $PWD:/tests loadimpact/k6 run /tests/${{github.event.inputs.command}} --out html=report/index.html
+
+      - name: step 4 - upload artifact
         uses: actions/upload-artifact@v3
         with: 
           name: relatorio de testes de performance
           path: report
       
-      - name: step 4 - publish report
+      - name: step 5 - publish report
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
