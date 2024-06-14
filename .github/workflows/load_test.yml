@@ -24,6 +24,7 @@ jobs:
       - name: step 3 - generate k6 report
         run: |
           mkdir -p report
+          sudo chmod -R 777 report
           docker run -v $PWD:/tests grafana/k6 run /tests/${{github.event.inputs.command}} --out json=/tests/report/k6_report.json
           docker run -v $PWD:/tests grafana/k6 run /tests/${{github.event.inputs.command}} --out html=/tests/report/index.html
 
