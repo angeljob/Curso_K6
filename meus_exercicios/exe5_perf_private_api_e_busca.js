@@ -10,7 +10,7 @@ Critérios:
     Limites:
         Requisição com falha inferior a 1% 
         Duração da requisição 95% levam menos de 6 seg*/
-//comando executar: k6 run .\exe6_carga_perf_2_apis.js -e URL=https://test-api.k6.io/public
+
 export const options = {
     vus: 100,
     duration: '10s',
