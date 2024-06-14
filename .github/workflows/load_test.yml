@@ -28,7 +28,7 @@ jobs:
         run: mkdir -p report
 
       - name: step 5 - move generated files
-        run: mv output.json report/
+        run: sudo mv output.json report/
 
       - name: step 6 - upload artifact
         uses: actions/upload-artifact@v4
@@ -37,4 +37,8 @@ jobs:
           path: report
       
       - name: step 7 - publish report
-        uses: peaceiris
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: report
