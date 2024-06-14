@@ -16,30 +16,21 @@ jobs:
       - name: step 1 - checkout
         uses: actions/checkout@v4
 
-      - name: step 2 - install k6-reporter
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y npm
-          npm install -g k6-reporter
-
-      - name: step 3 - run k6 load test
-        uses: grafana/k6-action@HEAD
+      - name: step 2 - run k6 load test
+        uses: grafana/k6-action@v0.2.0
         with: 
           filename: ${{github.event.inputs.command}}
 
-      - name: step 4 - generate HTML report
-        run: |
-          mkdir -p report
-          k6-reporter output.json report/index.html
-
-      - name: step 5 - upload artifact
-        uses: actions/upload-artifact@v3
+      - run: ls & mkdir report & mv index.html report
+      
+      - name: step 3 - upload artifact
+        uses: actions/upload-artifact@v4
         with: 
           name: relatorio de testes de performance
           path: report
       
-      - name: step 6 - publish report
-        uses: peaceiris/actions-gh-pages@v3
+      - name: step 4 - publish report
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
