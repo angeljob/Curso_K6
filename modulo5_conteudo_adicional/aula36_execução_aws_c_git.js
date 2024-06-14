@@ -1,5 +1,5 @@
 import http from 'k6/http';
-
+import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 
 /*Critérios:
     1 Realizar a consulta a api de listagem de crocodilos e busca por id de crocodilos.
@@ -47,6 +47,12 @@ import http from 'k6/http';
             http.get(__ENV.URL+'/crocodiles/1')
         }
     };
+
+    export function handleSummary(data) {
+        return {
+          "teste_k6.html": htmlReport(data),
+        };
+      }
     
 //comando executar: k6 run .\exe6_carga_perf_2_apis.js -e URL=https://test-api.k6.io/public
 

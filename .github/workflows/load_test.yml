@@ -28,7 +28,7 @@ jobs:
         run: mkdir -p report
 
       - name: step 5 - move generated files
-        run: sudo mv output.json report/
+        run: sudo mv teste_k6.html report/
 
       - name: step 6 - upload artifact
         uses: actions/upload-artifact@v4
