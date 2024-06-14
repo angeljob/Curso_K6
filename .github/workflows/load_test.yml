@@ -28,20 +28,17 @@ jobs:
         run: mkdir -p report
 
       - name: step 5 - move generated files
-        run: sudo mv teste_k6.html report/
+        run: sudo mv output.json teste_k6.html report/
 
-      - name: step 6 - list files in report directory
-        run: ls -al report
-
-      - name: step 7 - upload artifact
+      - name: step 6 - upload artifact
         uses: actions/upload-artifact@v4
         with: 
-          name: test_report
+          name: relatorio de testes de performance
           path: report
       
-      - name: step 8 - publish report
+      - name: step 7 - publish report
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: report
+          publish_dir: ./report
