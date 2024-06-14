@@ -24,8 +24,8 @@ jobs:
       - name: step 3 - generate k6 report
         run: |
           mkdir -p report
-          docker run -v $PWD:/tests loadimpact/k6 run /tests/${{github.event.inputs.command}} --out json=report/k6_report.json
-          docker run -v $PWD:/tests loadimpact/k6 run /tests/${{github.event.inputs.command}} --out html=report/index.html
+          docker run -v $PWD:/tests grafana/k6 run /tests/${{github.event.inputs.command}} --out json=/tests/report/k6_report.json
+          docker run -v $PWD:/tests grafana/k6 run /tests/${{github.event.inputs.command}} --out html=/tests/report/index.html
 
       - name: step 4 - upload artifact
         uses: actions/upload-artifact@v3
